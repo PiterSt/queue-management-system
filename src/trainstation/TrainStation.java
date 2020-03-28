@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class TrainStation {
     
     static final int TRAIN_CAPACITY = 30;
-    static Passenger[] waitingRoom = new Passenger[TRAIN_CAPACITY];
-    static PassengerQueue trainQueue = new PassengerQueue();
+    private static Passenger[] waitingRoom = new Passenger[TRAIN_CAPACITY];
+    private static PassengerQueue trainQueue = new PassengerQueue();
 
     // Main method:
     public static void main(String[] args) {
@@ -70,4 +70,24 @@ public class TrainStation {
         String menuChoice = in.nextLine().toLowerCase();
         return menuChoice;
     }
+    
+    private static void viewTrainQueue() {
+        
+    };
+    
+    private static void addPassengerToTrainQueue() {
+        
+    };
+    
+    private static void deletePassengerFromTrainQueue() {
+        
+    };
+    
+    private static void storeTrainQueueToFile() {
+        
+    };
+    
+    private static void loadTrainQueueFromFile() {
+        
+    };
 }
