@@ -15,6 +15,8 @@ public class TrainStation {
     public static void main(String[] args) {
         System.out.println(
             "Welcome to the Polish National Trains!\nThis is a Passenger Management System.");
+        // Initialising waiting room data
+        initialise(waitingRoom);
         
         // Loading main menu:
         String menuChoice = menuList(); 
@@ -56,6 +58,14 @@ public class TrainStation {
     }
     
     // Other methods:
+    private static void initialise(Passenger[] waitingRoom){
+        for (int i=0; i<waitingRoom.length; i++){
+            Passenger passenger = new Passenger("Mariusz", "Cebula");
+            waitingRoom[i] = passenger;
+        }
+        System.out.println("Loading Waiting Room data...\n");
+    }
+    
     private static String menuList() {
         System.out.println(
                   "\nTo continue, choose from the list of menu options:\n"
@@ -76,7 +86,9 @@ public class TrainStation {
     };
     
     private static void addPassengerToTrainQueue() {
-        
+        Passenger pass1 = new Passenger("Piotr","Stanny");
+        trainQueue.add(pass1);
+        trainQueue.display();
     };
     
     private static void deletePassengerFromTrainQueue() {

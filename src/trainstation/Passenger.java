@@ -4,13 +4,13 @@ package trainstation;
  * @author piotrstanny
  */
 public class Passenger {
-    String firstName, surname;
-    int secondsInQueue;
+    private String firstName, surname;
+    private int secondsInQueue;
     
     Passenger(String firstName, String surname){
         this.firstName = firstName;
         this.surname = surname;
-        secondsInQueue = 0;
+        this.secondsInQueue = 0;
     }
     
     public String getName(){
@@ -28,6 +28,6 @@ public class Passenger {
     }
     
     public void display(){
-        System.out.println("Passenger details: " + firstName + " " + surname + "Seconds in a queue: " + secondsInQueue);
+        System.out.println("Passenger details: " + firstName + " " + surname + " - seconds spent in a queue: " + secondsInQueue);
     }
 }
