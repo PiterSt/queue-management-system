@@ -28,6 +28,6 @@ public class Passenger {
     }
     
     public void display(){
-        System.out.println(firstName + " " + surname + " - spent in a queue: " + secondsInQueue + " sec");
+        System.out.println(firstName + " " + surname + " - " + secondsInQueue + " seconds in a queue");
     }
 }

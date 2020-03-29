@@ -17,27 +17,24 @@ public class TrainStation {
         System.out.println(
             "Welcome to the Polish National Trains!\nThis is a Passenger Management System.");
         
-        // Initialising waiting room data
-        initialise(waitingRoom);
-        
         // Loading main menu:
         String menuChoice = menuList(); 
         
         while (!"q".equals(menuChoice)) {
             switch(menuChoice) {
                 case "v":
-                    System.out.println("\nList of all passengers in the queue:\n---------------------");
-                    viewTrainQueue(waitingRoom);
+                    System.out.println("\nList of passengers in the queue:\n---------------------");
+                    viewTrainQueue();
                     menuChoice = menuList();
                     break;
                 case "a":
                     System.out.println("\nAdd passenger to the queue:\n---------------------");
-                    addPassengerToTrainQueue(Train);
+                    addPassengerToTrainQueue();
                     menuChoice = menuList();
                     break;
                 case "d":
-                    System.out.println("\nRemove passenger from the queue:\n---------------------");
-                    deletePassengerFromTrainQueue(Train);
+                    System.out.println("\nDelete passenger from the queue:\n---------------------");
+                    deletePassengerFromTrainQueue();
                     menuChoice = menuList();
                     break;
                 case "s":
@@ -48,6 +45,11 @@ public class TrainStation {
                 case "l":
                     System.out.println("\nLoad queue data from file:\n---------------------");
                     loadTrainQueueFromFile(Train);
+                    menuChoice = menuList();
+                    break;
+                case "r":
+                    System.out.println("\nRun boarding simulation:\n---------------------");
+                    runBoardingSimulation(waitingRoom);
                     menuChoice = menuList();
                     break;
                 default:
@@ -88,36 +90,47 @@ public class TrainStation {
                 + "Q:\t Quit program\n"
                 + "V:\t View the train queue\n"
                 + "A:\t Add passenger to the queue\n"
-                + "D:\t Delete passenger from the queue\n"
+                + "D:\t Delete passenger from the queue (board the train)\n"
                 + "S:\t Store queue data in to file\n"
-                + "L:\t Load queue data from file");
-        Scanner in = new Scanner(System.in);
-        String menuChoice = in.nextLine().toLowerCase();
+                + "L:\t Load queue data from file\n"
+                + "R:\t Run boarding simulation and produce report");
+        Scanner input = new Scanner(System.in);
+        String menuChoice = input.nextLine().toLowerCase();
         return menuChoice;
     }
     
     // Menu options methods:
-    private static void viewTrainQueue(Passenger[] waitingRoom) {
-        for (Passenger passenger : waitingRoom) {
-            passenger.display();
-        }
-    };
+    private static void viewTrainQueue() {
+        trainQueue.display();
+    }
     
     private static void addPassengerToTrainQueue() {
-        Passenger pass1 = new Passenger("Piotr","Stanny");
-        trainQueue.add(pass1);
-        trainQueue.display();
-    };
+        Scanner input = new Scanner(System.in);
+        String firstName, surname;
+        
+        System.out.print("Enter passenger's first name: ");
+        firstName = input.nextLine();
+        System.out.print("Enter passenger's surname: ");
+        surname = input.nextLine();
+        Passenger passenger = new Passenger(firstName, surname);
+        trainQueue.add(passenger);
+    }
     
     private static void deletePassengerFromTrainQueue() {
-        
-    };
+        trainQueue.remove();
+    }
     
     private static void storeTrainQueueToFile() {
         
-    };
+    }
     
     private static void loadTrainQueueFromFile() {
         
-    };
+    }
+    
+    private static void runBoardingSimulation(Passenger[] waitingRoom) {
+        // Initialising waiting room data
+        initialise(waitingRoom);
+        
+    }
 }
