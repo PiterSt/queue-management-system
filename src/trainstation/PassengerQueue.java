@@ -8,19 +8,18 @@ public class PassengerQueue {
     private int first = 0;
     private int last = 0;
     private int maxStayInQueue = 0; // The longest time someone waited in the queue 
-    private int maxQueueLength = 0; // The maximum length the queue reached
+    private int maxQueueLength = 0;
     
     // Required methods:
     public void add(Passenger next){
         //check for circular queue
-        if (isFull()){
-            System.out.println("...\nSorry, the queue is already full!");
-        } else {
-            queueArray[last] = next;
+        queueArray[last] = next;
             last++;
             System.out.println("\n...DONE.\nPassenger added!");
-            //check length of queue
-        }
+            if (maxQueueLength < last - first) {
+                maxQueueLength = last - first;
+            }
+            System.out.println(maxQueueLength);
     }
     public void remove(){
         if (isEmpty()){
@@ -52,7 +51,7 @@ public class PassengerQueue {
     //public int getMaxStay()
     
     // Other methods:
-    static boolean isInteger(String name) {
+    private boolean isInteger(String name) {
         try {
             int integer = Integer.parseInt(name); 
             return true;
@@ -62,7 +61,7 @@ public class PassengerQueue {
         }
     }
     
-    private static boolean nameValidationFailed(String name) {
+    public boolean nameValidationFailed(String name) {
         if (name.equals("")) {
             System.out.print("Name cannot be empty!\nTry again: ");
             return true;

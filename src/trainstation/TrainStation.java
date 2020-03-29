@@ -105,15 +105,25 @@ public class TrainStation {
     }
     
     private static void addPassengerToTrainQueue() {
-        Scanner input = new Scanner(System.in);
-        String firstName, surname;
-        
-        System.out.print("Enter passenger's first name: ");
-        firstName = input.nextLine();
-        System.out.print("Enter passenger's surname: ");
-        surname = input.nextLine();
-        Passenger passenger = new Passenger(firstName, surname);
-        trainQueue.add(passenger);
+        if (trainQueue.isFull()){
+            System.out.println("...\nSorry, the queue is already full!");
+        } else {
+            Scanner input = new Scanner(System.in);
+            String firstName, surname;
+            
+            System.out.print("Enter passenger's first name: ");
+            firstName = input.nextLine();
+            while (trainQueue.nameValidationFailed(firstName)) {
+                firstName = input.nextLine();
+            }
+            System.out.print("Enter passenger's surname: ");
+            surname = input.nextLine();
+            while (trainQueue.nameValidationFailed(surname)) {
+                surname = input.nextLine();
+            }
+            Passenger passenger = new Passenger(firstName, surname);
+            trainQueue.add(passenger);
+        }
     }
     
     private static void deletePassengerFromTrainQueue() {
@@ -131,6 +141,8 @@ public class TrainStation {
     private static void runBoardingSimulation(Passenger[] waitingRoom) {
         // Initialising waiting room data
         initialise(waitingRoom);
-        
+        for (Passenger passenger : waitingRoom) {
+            passenger.display();
+            }
     }
 }
