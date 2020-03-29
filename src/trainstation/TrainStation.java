@@ -3,7 +3,8 @@ package trainstation;
 /**
  * @author piotrstanny
  */
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class TrainStation {
     
@@ -15,6 +16,7 @@ public class TrainStation {
     public static void main(String[] args) {
         System.out.println(
             "Welcome to the Polish National Trains!\nThis is a Passenger Management System.");
+        
         // Initialising waiting room data
         initialise(waitingRoom);
         
@@ -25,7 +27,7 @@ public class TrainStation {
             switch(menuChoice) {
                 case "v":
                     System.out.println("\nList of all passengers in the queue:\n---------------------");
-                    viewTrainQueue(Train);
+                    viewTrainQueue(waitingRoom);
                     menuChoice = menuList();
                     break;
                 case "a":
@@ -58,12 +60,25 @@ public class TrainStation {
     }
     
     // Other methods:
-    private static void initialise(Passenger[] waitingRoom){
-        for (int i=0; i<waitingRoom.length; i++){
-            Passenger passenger = new Passenger("Mariusz", "Cebula");
-            waitingRoom[i] = passenger;
+    private static void initialise(Passenger[] waitingRoom) {
+        try {
+            String path = System.getProperty("user.dir");
+            Scanner readFile = new Scanner(new BufferedReader(new FileReader(path + File.separator + "passengers.dat")));
+            String fileLine;
+            int index = 0;
+            while (readFile.hasNext()) {
+                fileLine = readFile.nextLine();
+                String[] nameSplitArray = fileLine.split(" ");
+                Passenger passenger = new Passenger(nameSplitArray[0], nameSplitArray[1]);
+                waitingRoom[index] = passenger;
+                index++;
+            }
+            readFile.close();
+            System.out.println("\nInitialising Waiting Room...\nDone.");
         }
-        System.out.println("Loading Waiting Room data...\n");
+        catch (FileNotFoundException error) {
+            System.out.println("\nEXCEPTION ERROR:\nFile not found!\nMake sure 'passengers.dat' file is in the main directory.");
+        }
     }
     
     private static String menuList() {
@@ -81,8 +96,11 @@ public class TrainStation {
         return menuChoice;
     }
     
-    private static void viewTrainQueue() {
-        
+    // Menu options methods:
+    private static void viewTrainQueue(Passenger[] waitingRoom) {
+        for (Passenger passenger : waitingRoom) {
+            passenger.display();
+        }
     };
     
     private static void addPassengerToTrainQueue() {
