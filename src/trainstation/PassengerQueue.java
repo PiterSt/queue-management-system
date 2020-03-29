@@ -1,5 +1,8 @@
 
 package trainstation;
+
+import java.io.*;
+
 /**
  * @author piotrstanny
  */
@@ -71,5 +74,23 @@ public class PassengerQueue {
             return true;
         }
         return false;
+    }
+    
+    public void storeQueueToFile(){
+        try {
+            File file = new File("." + File.separator + "passengers_in_queue.txt");
+            file.createNewFile();
+            FileWriter writer = new FileWriter(file);
+        
+            for (int i=first; i<last; i++) {
+                String name = queueArray[i].getName();
+                writer.write(name + "\n");
+            }
+            writer.close();
+            System.out.println("...\nData has been saved to the file!");
+        }
+        catch (Exception error) {
+            System.out.println("Exception error:\n" + error);
+        }
     }
 }

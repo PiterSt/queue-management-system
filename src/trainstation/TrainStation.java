@@ -39,7 +39,7 @@ public class TrainStation {
                     break;
                 case "s":
                     System.out.println("\nSave queue data into file:\n---------------------");
-                    storeTrainQueueToFile(Train);
+                    storeTrainQueueToFile();
                     menuChoice = menuList();
                     break;
                 case "l":
@@ -131,7 +131,7 @@ public class TrainStation {
     }
     
     private static void storeTrainQueueToFile() {
-        
+        trainQueue.storeQueueToFile();
     }
     
     private static void loadTrainQueueFromFile() {
