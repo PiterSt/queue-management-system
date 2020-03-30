@@ -1,9 +1,9 @@
-Rich Fronning
-Matt Fraser
-Piotr Stanny
-Brook Ence
-Ben Smith
-Jason Khalipa
+0-Rich Fronning
+1-Matt Fraser
+2-Piotr Stanny
+3-Brook Ence
+4-Ben Smith
+5-Jason Khalipa
 Mariusz Pudzianowski
 Rich Fronning
 Matt Fraser
@@ -23,6 +23,6 @@ Rich Fronning
 Matt Fraser
 Piotr Stanny
 Brook Ence
-Ben Smith
-Jason Khalipa
-Mariusz Pudzianowski
+25-Ben Smith
+26-Jason Khalipa
+27-Mariusz Pudzianowski
