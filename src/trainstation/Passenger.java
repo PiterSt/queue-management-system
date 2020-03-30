@@ -24,7 +24,7 @@ public class Passenger {
         return secondsInQueue;
     }
     public void setSecondsInQueue(int seconds){
-        this.secondsInQueue = seconds;
+        this.secondsInQueue += seconds;
     }
     
     public void display(){

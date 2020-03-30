@@ -1,7 +1,7 @@
 
 package trainstation;
-
 import java.io.*;
+import java.util.*;
 
 /**
  * @author piotrstanny
@@ -10,48 +10,71 @@ public class PassengerQueue {
     private static Passenger[] queueArray = new Passenger[TrainStation.TRAIN_CAPACITY];
     private int first = 0;
     private int last = 0;
-    private int maxStayInQueue = 0; // The longest time someone waited in the queue 
+    private int maxStayInQueue = 0;
+    private int minStayInQueue = 100;
     private int maxQueueLength = 0;
     
     // Required methods:
     public void add(Passenger next){
-        //check for circular queue
+        //circular queue, how to display later?
+        if (last == queueArray.length) {
+            last = 0;
+        }
         queueArray[last] = next;
-            last++;
-            System.out.println("\n...DONE.\nPassenger added!");
-            if (maxQueueLength < last - first) {
-                maxQueueLength = last - first;
-            }
-            System.out.println(maxQueueLength);
+        if (maxQueueLength < last - first) {
+            maxQueueLength = last - first;
+        }
+        last++;
     }
+    
     public void remove(){
         if (isEmpty()){
             System.out.println("...\nSorry, the queue is already empty!");
         } else {
             Passenger removedPassenger = queueArray[first];
+            if (maxStayInQueue < removedPassenger.getSeconds()) {
+                maxStayInQueue = removedPassenger.getSeconds();
+            }
+            if (minStayInQueue > removedPassenger.getSeconds()) {
+                minStayInQueue = removedPassenger.getSeconds();
+            }
             first++;
-            System.out.println("\n...DONE.\nPassenger " + removedPassenger.getName() + " boarded the train!");
+            System.out.println("Passenger " + removedPassenger.getName() + " boarded the train!");
         }
     }
+    
     public boolean isFull(){
-        return last == queueArray.length;
+        return last == queueArray.length && first == 0;
     }
+    
     public boolean isEmpty(){
         return first == last;
     }
+    
     public void display(){
         if (isEmpty()){
             System.out.println("...\nSorry, there is no one in the queue at the moment!");
         } else {
+            int counter = 1;
             for (int i=first; i < last; i++) {
-            queueArray[i].display();
+                System.out.print(counter + ". ");
+                queueArray[i].display();
+                counter++;
             }
         }
     }
     
-    //public int getLength()
+    public int getLength(){
+        return maxQueueLength;
+    }
     
-    //public int getMaxStay()
+    public int getMaxStay(){
+        return maxStayInQueue;
+    }
+    
+    public int getMinStay(){
+        return minStayInQueue;
+    }
     
     // Other methods:
     private boolean isInteger(String name) {
@@ -92,5 +115,38 @@ public class PassengerQueue {
         catch (Exception error) {
             System.out.println("Exception error:\n" + error);
         }
+    }
+    
+    public void loadQueueFromFile(){
+        try {
+            String path = System.getProperty("user.dir");
+            Scanner readFile = new Scanner(new BufferedReader(new FileReader(path + File.separator + "passengers_in_queue.txt")));
+            String fileLine;
+            first = 0;
+            last = 0;
+            while (readFile.hasNext()) { 
+                fileLine = readFile.nextLine();
+                String[] nameSplitArray = fileLine.split(" ");
+                Passenger passenger = new Passenger(nameSplitArray[0], nameSplitArray[1]);
+                add(passenger);
+            }
+            readFile.close();
+            System.out.println("...Resetting queue\nData has been loaded!\nChoose 'V' to see the queue.");
+        }
+        catch (FileNotFoundException error) {
+            System.out.println("Exception error:\nNo data to load!\nAdd and store data in to file first to load it later.");
+        }
+    }
+    
+    public void setSeconds(int seconds) {
+        for (int i=first; i < last; i++) {
+                queueArray[i].setSecondsInQueue(seconds);
+            }
+    }
+    
+    public void resetQueue() {
+        first = 0;
+        last = 0;
+        System.out.println("Resetting the queue...");
     }
 }
