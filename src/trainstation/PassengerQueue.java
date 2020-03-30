@@ -16,11 +16,7 @@ public class PassengerQueue {
     
     // Required methods:
     public void add(Passenger next){
-        //circular queue, how to display later?
-        if (last == queueArray.length) {
-            last = 0;
-        }
-        queueArray[last] = next;
+        queueArray[last % queueArray.length] = next;
         if (maxQueueLength < last - first) {
             maxQueueLength = last - first;
         }
@@ -31,7 +27,7 @@ public class PassengerQueue {
         if (isEmpty()){
             System.out.println("...\nSorry, the queue is already empty!");
         } else {
-            Passenger removedPassenger = queueArray[first];
+            Passenger removedPassenger = queueArray[first % queueArray.length];
             if (maxStayInQueue < removedPassenger.getSeconds()) {
                 maxStayInQueue = removedPassenger.getSeconds();
             }
@@ -44,7 +40,7 @@ public class PassengerQueue {
     }
     
     public boolean isFull(){
-        return last == queueArray.length && first == 0;
+        return last - first == queueArray.length;
     }
     
     public boolean isEmpty(){
@@ -56,10 +52,30 @@ public class PassengerQueue {
             System.out.println("...\nSorry, there is no one in the queue at the moment!");
         } else {
             int counter = 1;
-            for (int i=first; i < last; i++) {
+            int arrSize = queueArray.length;
+            if (last < arrSize) {
+                for (int i=first; i < last; i++) {
                 System.out.print(counter + ". ");
                 queueArray[i].display();
                 counter++;
+                }
+            } else if (last%arrSize > first%arrSize) {
+                for (int i=first%arrSize; i < last%arrSize; i++) {
+                System.out.print(counter + ". ");
+                queueArray[i].display();
+                counter++;
+                }
+            } else {
+                for (int i=first; i < arrSize; i++) {
+                System.out.print(counter + ". ");
+                queueArray[i].display();
+                counter++;
+                }
+                for (int i=0; i < last%arrSize; i++) {
+                System.out.print(counter + ". ");
+                queueArray[i].display();
+                counter++;
+                }
             }
         }
     }
@@ -131,7 +147,7 @@ public class PassengerQueue {
                 add(passenger);
             }
             readFile.close();
-            System.out.println("...Resetting queue\nData has been loaded!\nChoose 'V' to see the queue.");
+            System.out.println("...Resetting the queue\nData has been loaded!\nChoose 'V' to see the queue.");
         }
         catch (FileNotFoundException error) {
             System.out.println("Exception error:\nNo data to load!\nAdd and store data in to file first to load it later.");
@@ -147,6 +163,9 @@ public class PassengerQueue {
     public void resetQueue() {
         first = 0;
         last = 0;
+        maxStayInQueue = 0;
+        minStayInQueue = 100;
+        maxQueueLength = 0;
         System.out.println("Resetting the queue...");
     }
 }

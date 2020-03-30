@@ -175,20 +175,24 @@ public class TrainStation {
         }
         
         // Display report:
-        System.out.println("\nQueue is empty! Press 'V' to confirm it.\nList of all passengers and waiting time:\n-----------------------");
+        System.out.println("\nQueue is empty! Press 'V' to confirm it.\n\nList of all passengers and waiting time:\n---------------------------------------");
+        int listCounter = 1;
         for (Passenger passenger : waitingRoom) {
+            System.out.print(listCounter + ". ");
             passenger.display();
+            listCounter++;
         }
-        System.out.println("\n####################################\n\n\tSIMULATION REPORT:");
-        System.out.println(trainQueue.getLength());
-        System.out.println(trainQueue.getMaxStay());
+        System.out.println("\n####################################\n\n\tSIMULATION REPORT:\n");
+        System.out.println("Maximum length of queue attained: " + trainQueue.getLength() + " people.");
+        System.out.println("Maximum waiting time in the queue: " + trainQueue.getMaxStay() + " seconds.");
         int totalWaiting = 0;
         for (Passenger passenger : waitingRoom) {
             totalWaiting += passenger.getSeconds();
         }
         int averageWaiting = totalWaiting / waitingRoom.length;
-        System.out.println(averageWaiting);
-        System.out.println(trainQueue.getMinStay());
+        System.out.println("The shortest time someone spent in the queue: " + trainQueue.getMinStay() + " seconds.");
+        System.out.println("The average time spent in the queue: " + averageWaiting + " seconds.");
+        
         
     }
 }
